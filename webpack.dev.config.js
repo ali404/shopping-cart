@@ -5,7 +5,7 @@ module.exports = {
     devtool: 'eval',
     entry: [
         'webpack-hot-middleware/client',
-        './src/entry'
+        './src/entry',
     ],
     output: {
         path: path.join(__dirname, 'public'),
@@ -18,9 +18,16 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.js?$/,
+            {
+                test: /\.js?$/,
                 loader: 'babel',
-                exclude: path.join(__dirname, 'node_modules')
+                exclude: path.join(__dirname, 'node_modules'),
+                query: {
+                    presets: [
+                        'es2015',
+                        'react'
+                    ]
+                }
             },
             {
                 test: /\.scss?$/,
