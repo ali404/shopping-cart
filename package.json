@@ -1,0 +1,61 @@
+{
+  "name": "shopping-cart",
+  "version": "0.0.1",
+  "description": "",
+  "main": "tests.webpack.js",
+  "scripts": {
+    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
+    "start": "node app.js",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ali404/shopping-cart.git"
+  },
+  "author": "Ali Cerrahoglu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ali404/shopping-cart/issues"
+  },
+  "homepage": "https://github.com/ali404/shopping-cart#readme",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "express": "^4.14.0",
+    "flux": "^2.1.1",
+    "keymirror": "^0.1.1",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-router": "^2.5.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
+    "enzyme": "^2.3.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "karma": "^1.0.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-cli": "^1.0.0",
+    "karma-coverage": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.5.3",
+    "node-sass": "^3.8.0",
+    "postcss-loader": "^0.9.1",
+    "react-addons-test-utils": "^15.1.0",
+    "react-hot-loader": "^1.3.0",
+    "sass-loader": "^3.2.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
+  }
+}
