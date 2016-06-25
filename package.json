@@ -4,9 +4,9 @@
   "description": "",
   "main": "tests.webpack.js",
   "scripts": {
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node app.js",
-    "test": "karma start"
+    "test": "karma start",
+    "build": "npm test && webpack --config ./webpack.prod.config.js --progress --colors",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ali404/shopping-cart#readme",
   "dependencies": {
     "classnames": "^2.2.5",
+    "compression": "^1.6.2",
     "express": "^4.14.0",
     "flux": "^2.1.1",
     "keymirror": "^0.1.1",
@@ -38,11 +39,14 @@
     "enzyme": "^2.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "istanbul-instrumenter-loader": "^0.2.0",
     "karma": "^1.0.0",
+    "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-cli": "^1.0.0",
     "karma-coverage": "^1.0.0",
     "karma-mocha": "^1.0.1",
+    "karma-mocha-reporter": "^2.0.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.5.3",

@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+const compress = require('compression')
 
 module.exports = {
     app: function() {
@@ -7,6 +8,7 @@ module.exports = {
         const indexPath = path.join(__dirname, './index.html')
         const publicPath = express.static(path.join(__dirname, 'public'))
 
+        app.use(compress())
         app.use('/public', publicPath)
 
         app.get('/', function(_, res) {
