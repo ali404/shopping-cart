@@ -23,7 +23,7 @@ class AuthStoreClass extends FluxStore {
     }
 
     logout() {
-
+        localStorage.removeItem('token')
     }
 }
 
