@@ -9,7 +9,7 @@ export default class AuthApi {
     *   AJAX request returns an object with the user
     *   returns {Promise} with the AJAX request
     */
-    getMe() {
+    static getMe() {
         return new Promise((resolve, reject) => {
             request
                 .get('/api/me')
@@ -32,7 +32,7 @@ export default class AuthApi {
     *   AJAX request returns a user object if `username` is found in DB
     *   returns {Promise}
     */
-    getUser(username) {
+    static getUser(username) {
         return new Promise((resolve, reject) => {
             request
                 .get('/api/user')
@@ -60,7 +60,7 @@ export default class AuthApi {
     *   AJAX request returns the JWT Token
     *   returns {Promise} with the AJAX request
     */
-    login(username, password) {
+    static login(username, password) {
         return new Promise((resolve, reject) => {
             request
                 .post('/api/user/login')
@@ -88,7 +88,7 @@ export default class AuthApi {
     *   Signs up the user, if the credentials are OK
     *   returns {Promise} with the AJAX request
     */
-    signup(username, password) {
+    static signup(username, password) {
         return new Promise((resolve, reject) => {
             request
                 .post('/api/user')
