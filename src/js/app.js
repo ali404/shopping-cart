@@ -1,11 +1,32 @@
 import React from 'react'
+import {render} from 'react-dom'
+import {Router, Route, browserHistory} from 'react-router'
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Hello world</h1>
-            </div>
-        )
-    }
-}
+import App from './routes/App.route'
+import Home from './routes/Home.route'
+import Login from './routes/Login.route'
+import Signup from './routes/Signup.route'
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+let routes = (
+    <Router history={browserHistory}>
+        <Route component={App}>
+            <Route
+                path="/"
+                component={Home}
+            />
+            <Route
+                path="/login"
+                component={Login}
+            />
+            <Route
+                path="signup"
+                component={Signup}
+            />
+        </Route>
+    </Router>
+)
+
+render(routes, document.getElementById('main'))
