@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
 
+import LoginContainer
+    from '../components/Login/LoginContainer.react'
+
+
 export default class LoginRoute extends Component {
     constructor() {
         super()
@@ -7,7 +11,7 @@ export default class LoginRoute extends Component {
 
     render() {
         return (
-            <div>Login</div>
+            <LoginContainer />
         )
     }
 }

@@ -1,6 +1,25 @@
 const path = require('path')
 const webpack = require('webpack')
 
+const babelSettings = {
+    presets: ['react', 'es2015', 'stage-0'],
+    env: {
+        development: {
+            plugins: [
+                ['react-transform', {
+                    transforms: [
+                        {
+                            transform: 'react-transform-hmr',
+                            imports: ['react'],
+                            locals: ['module']
+                        }
+                    ]
+                }]
+            ]
+        }
+    }
+}
+
 module.exports = {
     devtool: 'eval',
     entry: [
@@ -22,15 +41,10 @@ module.exports = {
                 test: /\.js?$/,
                 loader: 'babel',
                 exclude: path.join(__dirname, 'node_modules'),
-                query: {
-                    presets: [
-                        'es2015',
-                        'react'
-                    ]
-                }
+                query: babelSettings
             },
             {
-                test: /\.scss?$/,
+                test: /\.sass?$/,
                 loader: 'style!css!sass',
                 include: path.join(__dirname, 'src', 'css')
             },

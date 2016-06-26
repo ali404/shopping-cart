@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import HeaderContainer
     from '../components/Header/HeaderContainer.react'
@@ -12,12 +10,10 @@ export default class  AppRoute extends Component {
 
     render() {
         return (
-            <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <div>
-                    <HeaderContainer />
-                    {this.props.children}
-                </div>
-            </MuiThemeProvider>
+            <main>
+                <HeaderContainer />
+                {this.props.children}
+            </main>
         )
     }
 }
