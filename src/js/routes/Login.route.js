@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import LoginContainer
     from '../components/Login/LoginContainer.react'
+import {Container} from '../styles/Grid'
 
 
 export default class LoginRoute extends Component {
@@ -11,7 +12,9 @@ export default class LoginRoute extends Component {
 
     render() {
         return (
-            <LoginContainer />
+            <Container>
+                <LoginContainer />
+            </Container>
         )
     }
 }

@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+import {Container} from '../styles/Grid'
+
 export default class HomeRoute extends Component {
     constructor() {
         super()
@@ -7,7 +9,9 @@ export default class HomeRoute extends Component {
 
     render() {
         return (
-            <div>Home</div>
+            <Container>
+                <div>Home</div>
+            </Container>
         )
     }
 }

@@ -1,2 +1,4 @@
-require('./js/app.js')
+require('./assets/fonts/fonts.sass')
 require('./css/app.sass')
+
+require('./js/app.js')

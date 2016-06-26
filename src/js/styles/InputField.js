@@ -10,7 +10,8 @@ export default class InputField extends Component {
             ...other
         } = this.props
 
-        const classNames = "" + className
+        const temp = className || ''
+        const classNames = "input" + temp
 
         return (
             <input

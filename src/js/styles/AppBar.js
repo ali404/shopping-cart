@@ -8,13 +8,17 @@ export default class AppBar extends Component {
             ...other,
         } = this.props
 
-        const classNames = "" + className
+        const temp = className || ''
+        const classNames = "header" + temp
 
         return (
             <header
                 {...other}
                 className={classNames}>
-                <div>
+                <div className="header-switch">
+                    <i className="material-icons md-light">menu</i>
+                </div>
+                <div className="header-title">
                     {title}
                 </div>
             </header>

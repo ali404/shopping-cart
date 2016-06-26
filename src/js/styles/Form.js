@@ -1,24 +1,22 @@
 import React, {Component} from 'react'
 
-export default class Button extends Component {
+export default class Form extends Component {
     render() {
         const {
             children,
             className,
-            label,
             ...other
         } = this.props
 
         const temp = className || ''
-        const classNames = "button" + temp
+        const classNames = "form" + temp
 
         return (
-            <button
+            <div
                 {...other}
-                className={classNames}
-            >
-                {label}
-            </button>
+                className={classNames}>
+                {children}
+            </div>
         )
     }
 }
