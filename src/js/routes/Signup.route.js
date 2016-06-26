@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 
 import {Container} from '../styles/Grid'
+import SignupContainer
+    from '../components/Signup/SignupContainer.react'
 
 export default class SignupRoute extends Component {
     constructor() {
@@ -10,7 +12,7 @@ export default class SignupRoute extends Component {
     render() {
         return (
             <Container>
-                <div>Signup</div>
+                <SignupContainer />
             </Container>
         )
     }
