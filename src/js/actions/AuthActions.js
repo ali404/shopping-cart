@@ -12,17 +12,18 @@ export default class AuthActions {
                 if(payload.success) {
                     AppDispatcher.dispatch({
                         actionType: AuthConstants.LOGIN,
-                        user: payload.user
+                        token: payload.token
                     })
                 }
                 else {
                     AppDispatcher.dispatch({
                         actionType: AuthConstants.LOGIN_ERROR,
+                        message: payload.message
                     })
                 }
             })
             .catch((err) => {
-                console.log(err)
+                throw err
             })
     }
 
@@ -33,14 +34,18 @@ export default class AuthActions {
                 if(payload.success) {
                     AppDispatcher.dispatch({
                         actionType: AuthConstants.SIGNUP,
-                        user: payload.user
+                        message: payload.message
                     })
                 }
                 else {
                     AppDispatcher.dispatch({
-                        actionType: AuthConstants.SIGNUP_ERROR
+                        actionType: AuthConstants.SIGNUP_ERROR,
+                        message: payload.message
                     })
                 }
+            })
+            .catch((err) => {
+                throw err
             })
     }
 

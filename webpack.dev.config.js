@@ -21,7 +21,7 @@ const babelSettings = {
 }
 
 module.exports = {
-    devtool: 'eval',
+    devtool: 'eval-source-map',
     entry: [
         'webpack-hot-middleware/client',
         './src/entry',

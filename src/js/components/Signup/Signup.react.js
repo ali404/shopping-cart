@@ -1,26 +1,52 @@
 import React, {Component} from 'react'
-import Paper from '../../styles/Paper'
-import Form from '../../styles/Form'
-import InputField from '../../styles/InputField'
-import Button from '../../styles/Button'
+import Form from '../Form/Form.react'
+import Security from '../../utils/Security.api'
+import AuthActions from '../../actions/AuthActions'
 
 export default class Signup extends Component {
+    constructor() {
+        super()
+
+        this.signupSchema = JSON.stringify({
+            title: 'Signup',
+            required: ['username', 'password', 'repeatPassword'],
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                },
+                password: {
+                    type: 'password',
+                    title: 'Password',
+                    placeholder: 'Password...'
+                },
+                repeatPassword: {
+                    type: 'password',
+                    title: 'Repeat password',
+                    placeholder: 'Repeat password...'
+                }
+            }
+        })
+
+        this.validators = {
+            username: Security.validateUsername,
+            password: Security.validatePassword,
+            repeatPassword: Security.validatePassword
+        }
+    }
+
     render() {
         return (
-            <Paper>
-                <Form>
-                    <h4 className="h4">Signup</h4>
-                    <InputField
-                        label="Username"
-                        type="text"
-                    />
-                    <InputField
-                        label="Password"
-                        type="password"
-                    />
-                    <Button label="Login"/>
-                </Form>
-            </Paper>
+            <Form
+                schema={this.signupSchema}
+                validators={this.validators}
+                onSubmit={this.onSubmit}
+            />
         )
+    }
+
+    onSubmit = (values) => {
+        AuthActions.signup(values.username, values.password)
     }
 }

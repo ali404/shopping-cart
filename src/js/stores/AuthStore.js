@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import AuthConstants from '../constants/AuthConstants'
 
-import Fluxstore from './__helpers__/FluxStore'
+import FluxStore from './__helpers__/FluxStore'
 
 class AuthStoreClass extends FluxStore {
     constructor() {
@@ -30,13 +30,22 @@ class AuthStoreClass extends FluxStore {
 let AuthStore = new AuthStoreClass()
 AuthStore.dispatchToken = AppDispatcher.register(payload => {
     let actionType = payload.actionType
-    switch(acitonType) {
-        case AuthConstants.LOGIN:
 
+    switch(actionType) {
+        case AuthConstants.LOGIN:
+            console.log(payload)
+            break
+
+        case AuthConstants.LOGIN_ERROR:
+            console.log(payload)
             break
 
         case AuthConstants.SIGNUP:
+            console.log(payload)
+            break
 
+        case AuthConstants.SIGNUP_ERROR:
+            console.log(payload)
             break
 
         case AuthConstants.LOGOUT:
@@ -46,4 +55,4 @@ AuthStore.dispatchToken = AppDispatcher.register(payload => {
 })
 
 
-export default Authstore
+export default AuthStore

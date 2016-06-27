@@ -1,30 +1,46 @@
 import React, {Component} from 'react'
-import Form from '../../styles/Form.js'
-import Paper from '../../styles/Paper.js'
-import InputField from '../../styles/InputField'
-import Button from '../../styles/Button'
+import Form from '../Form/Form.react'
+import Security from '../../utils/Security.api'
+import AuthActions from '../../actions/AuthActions'
 
 export default class Login extends Component {
     constructor() {
         super()
+
+        this.loginSchema = JSON.stringify({
+            title: 'Login',
+            required: ['username', 'password'],
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                },
+                password: {
+                    type: 'password',
+                    title: 'Password',
+                    placeholder: 'Password...'
+                }
+            }
+        })
+
+        this.validators = {
+            username: Security.validateUsername,
+            password: Security.validatePassword
+        }
     }
 
     render() {
         return (
-            <Paper>
-                <Form>
-                    <h4 className="h4">Login</h4>
-                    <InputField
-                        label="Username"
-                        type="text"
-                    />
-                    <InputField
-                        label="Password"
-                        type="password"
-                    />
-                    <Button label="Login"/>
-                </Form>
-            </Paper>
+            <Form
+                schema={this.loginSchema}
+                validators={this.validators}
+                onSubmit={this.onSubmit}
+            />
         )
+    }
+
+    onSubmit = (values) => {
+        AuthActions.login(values.username, values.password)
     }
 }

@@ -5,20 +5,20 @@ export default class InputField extends Component {
         const {
             children,
             className,
-            label,
+            placeholder,
             type,
-            ...other
+            ...other,
         } = this.props
 
         const temp = className || ''
-        const classNames = "input" + temp
+        const classNames = "input " + temp
 
         return (
             <input
                 {...other}
                 type={type}
                 className={classNames}
-                placeholder={label}
+                placeholder={placeholder}
             />
         )
     }
