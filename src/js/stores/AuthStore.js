@@ -10,12 +10,7 @@ class AuthStoreClass extends FluxStore {
     }
 
     isAuthenticated() {
-        if(this.getJwt()) {
-            return true
-        }
-        else {
-            return false
-        }
+        return !!this.getJwt()
     }
 
     getJwt() {
