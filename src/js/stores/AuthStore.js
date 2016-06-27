@@ -22,37 +22,56 @@ class AuthStoreClass extends FluxStore {
         return localStorage.getItem('token')
     }
 
+    login(jwt) {
+        this.loginSucceeded = true
+        localStorage.setItem('token', jwt)
+    }
+
+    setLoginError() {
+        this.loginSucceeded = false
+    }
+
+    signup() {
+        this.signupSucceeded = true
+    }
+
+    setSignupError() {
+        this.signupSucceeded = false
+    }
+
     logout() {
         localStorage.removeItem('token')
     }
 }
 
 let AuthStore = new AuthStoreClass()
+
 AuthStore.dispatchToken = AppDispatcher.register(payload => {
     let actionType = payload.actionType
 
     switch(actionType) {
         case AuthConstants.LOGIN:
-            console.log(payload)
+            AuthStore.login(payload.token)
             break
 
         case AuthConstants.LOGIN_ERROR:
             console.log(payload)
+            AuthStore.setLoginError()
             break
 
         case AuthConstants.SIGNUP:
-            console.log(payload)
+            AuthStore.signup()
             break
 
         case AuthConstants.SIGNUP_ERROR:
             console.log(payload)
+            AuthStore.setSignupError()
             break
 
         case AuthConstants.LOGOUT:
-
+            AuthStore.logout()
             break
     }
 })
-
 
 export default AuthStore
