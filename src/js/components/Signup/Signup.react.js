@@ -19,20 +19,24 @@ export default class Signup extends Component {
                 password: {
                     type: 'password',
                     title: 'Password',
-                    placeholder: 'Password...'
+                    placeholder: 'Password...',
+                    ref: 'repeatPassword'
                 },
                 repeatPassword: {
                     type: 'password',
                     title: 'Repeat password',
-                    placeholder: 'Repeat password...'
+                    placeholder: 'Repeat password...',
+                    ref: 'password'
                 }
-            }
+            },
+            refs: [
+                ['password', 'repeatPassword']
+            ]
         })
 
         this.validators = {
             username: Security.validateUsername,
-            password: Security.validatePassword,
-            repeatPassword: Security.validatePassword
+            password: Security.validatePassword
         }
     }
 
