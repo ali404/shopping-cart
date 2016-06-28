@@ -1,22 +1,23 @@
 import React, {Component} from 'react'
 
-export default class MenuItem extends Component {
+export default class App extends Component {
     render() {
         const {
+            children,
             className,
             ...other
         } = this.props
 
         const temp = className || ''
-        const classNames = 'header-menu--item ' + temp
+        const classNames = 'app ' + temp
 
         return (
-            <div
+            <main
                 {...other}
                 className={classNames}
             >
-                {this.props.children}
-            </div>
+                {children}
+            </main>
         )
     }
 }

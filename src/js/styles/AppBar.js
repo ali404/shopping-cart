@@ -5,6 +5,7 @@ export default class AppBar extends Component {
         const {
             title,
             className,
+            onButtonClick,
             ...other,
         } = this.props
 
@@ -15,7 +16,9 @@ export default class AppBar extends Component {
             <header
                 {...other}
                 className={classNames}>
-                <div className="header-switch">
+                <div
+                    className="header-switch"
+                    onClick={this.props.onButtonClick}>
                     <i className="material-icons md-light">menu</i>
                 </div>
                 <div className="header-title">

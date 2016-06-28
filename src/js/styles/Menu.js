@@ -9,7 +9,9 @@ export default class Menu extends Component {
             ...other
         } = this.props
 
-        const classNames = "" + className
+        var temp = open ? 'open ' : 'closed '
+        temp += className || ''
+        const classNames = 'header-menu ' + temp
 
         return (
             <div

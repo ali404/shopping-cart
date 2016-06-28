@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import HeaderContainer
     from '../components/Header/HeaderContainer.react'
 
+import App from '../styles/App'
+
 export default class  AppRoute extends Component {
     constructor() {
         super()
@@ -10,10 +12,12 @@ export default class  AppRoute extends Component {
 
     render() {
         return (
-            <main>
+            <div>
                 <HeaderContainer />
-                {this.props.children}
-            </main>
+                <App>
+                    {this.props.children}
+                </App>
+            </div>
         )
     }
 }

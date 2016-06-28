@@ -1,20 +1,25 @@
 .header
-    align-items: center
-    background-color: $baseColor
-    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28)
-    display: flex
-    height: 56px
-    padding: 0px 18px
-    width: 100%
-    transition: all 0.2s ease-in
+   align-items: center
+   background-color: $baseColor
+   box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28)
+   display: flex
+   height: $headerHeight
+   padding: 0px 18px
+   position: fixed
+   width: 100%
+   transition: all 0.2s ease-in
+   top: 0
 
 .header-title
-  @extend .h5
+   @extend .h5
+   color: $black100
+   margin-left: 8px
 
 .header-switch
-  border-radius: 2px
-  padding: 6px
-  transition: all 0.2s ease-in-out
+   color: $black100
+   border-radius: 2px
+   padding: 6px
+   transition: all 0.2s ease-in-out
 
-  &:hover
-    cursor: pointer
+   &:hover
+      cursor: pointer
