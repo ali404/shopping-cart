@@ -21,7 +21,7 @@ export default class Header extends Component {
                     title="Title"
                     onButtonClick={this.onButtonClick}
                 />
-                <Menu open={this.state.open}>
+                <Menu open={this.props.isMenuOpen}>
                     <MenuItem>
                         <Link
                             activeClassName="active"
@@ -58,8 +58,6 @@ export default class Header extends Component {
     }
 
     onButtonClick = () => {
-        this.setState({
-            open: !this.state.open
-        })
+        this.props.onButtonClick()
     }
 }
