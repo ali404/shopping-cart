@@ -17,7 +17,6 @@ export default class HeaderContainer extends Component {
     }
 
     componentDidMount() {
-        console.log(HeaderStore)
         HeaderStore.addChangeListener(this._onChange)
     }
 

@@ -1,9 +1,10 @@
+import {EventEmitter} from 'events'
+const CHANGE_EVENT = 'change'
+
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import AuthConstants from '../constants/AuthConstants'
 
-import FluxStore from './__helpers__/FluxStore'
-
-class AuthStoreClass extends FluxStore {
+class AuthStoreClass extends EventEmitter {
     constructor() {
         super()
         this.jwt = undefined
@@ -36,6 +37,20 @@ class AuthStoreClass extends FluxStore {
 
     logout() {
         localStorage.removeItem('token')
+    }
+
+
+
+    emitChange() {
+        this.emit(CHANGE_EVENT)
+    }
+
+    addChangeListener(callback) {
+        this.on(CHANGE_EVENT, callback)
+    }
+
+    removeChangeListener(callback) {
+        this.removeListener(CHANGE_EVENT, callback)
     }
 }
 

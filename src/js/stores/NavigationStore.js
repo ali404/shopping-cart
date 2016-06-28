@@ -1,9 +1,26 @@
+import {EventEmitter} from 'events'
+
+const CHANGE_EVENT = 'change'
+
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import NavigationConstants from '../constants/NavigationConstants'
-import FluxStore from './__helpers__/FluxStore'
 
-class NavigationStoreClass extends FluxStore {
+class NavigationStoreClass extends EventEmitter {
+    constructor() {
 
+    }
+
+    emitChange() {
+        this.emit(CHANGE_EVENT)
+    }
+
+    addChangeListener(callback) {
+        this.on(CHANGE_EVENT, callback)
+    }
+
+    removeChangeListener(callback) {
+        this.removeListener(CHANGE_EVENT, callback)
+    }
 }
 
 let NavigationStore = new NavigationStoreClass()
