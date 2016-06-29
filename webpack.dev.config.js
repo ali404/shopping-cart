@@ -1,47 +1,21 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const babelSettings = {
-    presets: ['react', 'es2015', 'stage-0'],
-    env: {
-        development: {
-            plugins: [
-                ['react-transform', {
-                    transforms: [
-                        {
-                            transform: 'react-transform-hmr',
-                            imports: ['react'],
-                            locals: ['module']
-                        }
-                    ]
-                }]
-            ]
-        }
-    }
-}
-
 module.exports = {
     devtool: 'eval-source-map',
-    entry: [
-        'webpack-hot-middleware/client',
-        './src/entry',
-    ],
+    entry: {
+        app: './src/entry'
+    },
     output: {
         path: path.join(__dirname, 'public'),
-        filename: 'bundle.js',
-        publicPath: '/public/'
+        filename: 'bundle.js'
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
-    ],
     module: {
         loaders: [
             {
                 test: /\.js?$/,
-                loader: 'babel',
-                exclude: path.join(__dirname, 'node_modules'),
-                query: babelSettings
+                loader: 'babel-loader',
+                exclude: path.join(__dirname, 'node_modules')
             },
             {
                 test: /\.sass?$/,
@@ -57,5 +31,6 @@ module.exports = {
                 loader: 'file'
             }
         ]
-    }
+    },
+    plugins: []
 }

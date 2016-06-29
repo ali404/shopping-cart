@@ -16,6 +16,5 @@ describe('App', () => {
 
     it('should render', () => {
         expect(app).to.exist
-        expect(app.text()).to.equal('Hello world')
     })
 })

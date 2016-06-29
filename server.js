@@ -36,20 +36,22 @@ app.use(compress())
 // set the view engine to `pug`
 app.set("view engine", "pug")
 
-// configure Hot reload in development
-if(process.env.NODE_ENV !== 'production') {
-    const webpack = require('webpack')
-    const webpackDevMiddleware = require('webpack-dev-middleware')
-    const webpackHotMiddleware = require('webpack-hot-middleware')
-    const webpackConfig = require('./webpack.dev.config.js')
-    const compiler = webpack(webpackConfig)
+//
+// // configure Hot reload in development
+// if(process.env.NODE_ENV !== 'production') {
+//     const webpack = require('webpack')
+//     const webpackDevMiddleware = require('webpack-dev-middleware')
+//     const webpackHotMiddleware = require('webpack-hot-middleware')
+//     const webpackConfig = require('./webpack.dev.config.js')
+//     const compiler = webpack(webpackConfig)
+//
+//     app.use(webpackHotMiddleware(compiler))
+//     app.use(webpackDevMiddleware(compiler, {
+//         noInfo: true,
+//         publicPath: webpackConfig.output.publicPath
+//     }))
+// }
 
-    app.use(webpackHotMiddleware(compiler))
-    app.use(webpackDevMiddleware(compiler, {
-        noInfo: true,
-        publicPath: webpackConfig.output.publicPath
-    }))
-}
 
 // set the static files directory name
 app.use(express.static(__dirname + '/public'))

@@ -7,9 +7,6 @@ import Home from './routes/Home.route'
 import Login from './routes/Login.route'
 import Signup from './routes/Signup.route'
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 let routes = (
     <Router history={browserHistory}>
         <Route component={App}>
