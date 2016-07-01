@@ -6,13 +6,31 @@ import Form from '../../components/Form/Form.react'
 
 describe('Form', () => {
     let form
+    let formSchema
 
     beforeEach(() => {
         if(form) {
             form.unmount()
         }
 
-        form = mount(<Form />)
+        formSchema = JSON.stringify({
+            title: 'Form',
+            required: ['username', 'password'],
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                },
+                password: {
+                    type: 'text',
+                    title: 'Password',
+                    placeholder: 'Password...'
+                }
+            }
+        })
+
+        form = mount(<Form schema={formSchema} />)
     })
 
     it('should render', () => {

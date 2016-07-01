@@ -26,4 +26,4 @@ let routes = (
     </Router>
 )
 
-render(routes, document.getElementById('main'))
+render(routes, document.getElementById('shopping-cart'))
