@@ -7,6 +7,8 @@ import Form from '../../components/Form/Form.react'
 describe('Form', () => {
     let form
     let formSchema
+    let usernameField
+    let passwordField
 
     beforeEach(() => {
         if(form) {
@@ -30,7 +32,14 @@ describe('Form', () => {
             }
         })
 
-        form = mount(<Form schema={formSchema} />)
+        form = mount(
+            <Form
+                schema={formSchema}
+            />
+        )
+
+        usernameField = form.find('#username-field')
+        passwordField = form.find('#password-field')
     })
 
     it('should render', () => {

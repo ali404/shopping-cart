@@ -6,22 +6,23 @@ import App from './routes/App.route'
 import Home from './routes/Home.route'
 import Login from './routes/Login.route'
 import Signup from './routes/Signup.route'
+import Profile from './routes/Profile.route'
 
 let routes = (
     <Router history={browserHistory}>
         <Route component={App}>
             <Route
                 path="/"
-                component={Home}
-            />
+                component={Home} />
             <Route
                 path="/login"
-                component={Login}
-            />
+                component={Login} />
             <Route
-                path="signup"
-                component={Signup}
-            />
+                path="/signup"
+                component={Signup} />
+            <Route
+                path="/profile"
+                component={Profile} />
         </Route>
     </Router>
 )

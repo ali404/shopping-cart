@@ -40,6 +40,7 @@ HeaderStore.dispatchToken = AppDispatcher.register(payload => {
     switch(actionType) {
         case HeaderConstants.TOGGLE_MENU:
             HeaderStore.toggleMenu()
+
             HeaderStore.emitChange()
             break
     }

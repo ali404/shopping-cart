@@ -23,17 +23,25 @@ class AuthStoreClass extends EventEmitter {
         localStorage.setItem('token', jwt)
     }
 
-    setLoginError() {
-        this.loginSucceeded = false
-    }
+        setLoginError() {
+            this.loginSucceeded = false
+        }
+
+        getLoginState() {
+            return this.loginSucceeded;
+        }
 
     signup() {
         this.signupSucceeded = true
     }
 
-    setSignupError() {
-        this.signupSucceeded = false
-    }
+        setSignupError() {
+            this.signupSucceeded = false
+        }
+
+        getSignupState() {
+            return this.signupSucceeded
+        }
 
     logout() {
         localStorage.removeItem('token')
@@ -62,24 +70,33 @@ AuthStore.dispatchToken = AppDispatcher.register(payload => {
     switch(actionType) {
         case AuthConstants.LOGIN:
             AuthStore.login(payload.token)
+
+            AuthStore.emitChange()
             break
 
         case AuthConstants.LOGIN_ERROR:
             console.log(payload)
             AuthStore.setLoginError()
+
+            AuthStore.emitChange()
             break
 
         case AuthConstants.SIGNUP:
             AuthStore.signup()
+
+            AuthStore.emitChange()
             break
 
         case AuthConstants.SIGNUP_ERROR:
             console.log(payload)
             AuthStore.setSignupError()
+
+            AuthStore.emitChange()
             break
 
         case AuthConstants.LOGOUT:
             AuthStore.logout()
+            AuthStore.emitChange()
             break
     }
 })

@@ -4,6 +4,7 @@ import HeaderContainer
     from '../components/Header/HeaderContainer.react'
 
 import App from '../styles/App'
+import NavigationStore from '../stores/NavigationStore'
 
 export default class  AppRoute extends Component {
     constructor() {

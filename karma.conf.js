@@ -3,7 +3,7 @@ const webpack = require('webpack')
 module.exports = function(config) {
     config.set({
         browsers: ['Chrome'],
-        singleRun: false,
+        singleRun: true,
         frameworks: ['mocha'],
         files: [
             'tests.webpack.js'

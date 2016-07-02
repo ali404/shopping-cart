@@ -4,11 +4,20 @@ const CHANGE_EVENT = 'change'
 
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import NavigationConstants from '../constants/NavigationConstants'
+import AuthConstants from '../constants/AuthConstants'
+
+import {browserHistory} from 'react-router'
 
 class NavigationStoreClass extends EventEmitter {
-    constructor() {
-
+    navigateProfile() {
+        browserHistory.push('/profile')
     }
+
+    navigateLogout() {
+        browserHistory.push('/')
+    }
+
+
 
     emitChange() {
         this.emit(CHANGE_EVENT)
@@ -27,17 +36,21 @@ let NavigationStore = new NavigationStoreClass()
 
 NavigationStore.dispatchToken = AppDispatcher.register(payload => {
     let actionType = payload.actionType
+
     switch(actionType) {
-        case NavigationConstants.NAVIGATE_PROFILE:
+        case AuthConstants.LOGIN:
+            console.log(1)
+            NavigationStore.navigateProfile()
 
+            NavigationStore.emitChange()
             break
 
-        case NavigationConstants.NAVIGATE_ADMIN:
+        case AuthConstants.LOGOUT:
+            NavigationStore.navigateLogout()
 
-            break
-
-        case NavigationConstants.NAVIGATE_LOGIN:
-
+            NavigationStore.emitChange()
             break
     }
 })
+
+export default NavigationStore

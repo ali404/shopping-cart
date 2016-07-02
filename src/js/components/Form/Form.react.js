@@ -48,22 +48,24 @@ export default class Form extends Component {
         let fields = []
         let buttonEnabled = true
 
-        for(let field in this.state.fields) {
+        for(let fieldName in this.state.fields) {
             let className = classNames({
-                'error': this.state.fields[field].isValid === false,
-                'valid': this.state.fields[field].isValid === true
+                'error': this.state.fields[fieldName].isValid === false,
+                'valid': this.state.fields[fieldName].isValid === true
             })
 
-            buttonEnabled = buttonEnabled && this.state.fields[field].isValid
+            buttonEnabled = buttonEnabled
+                && this.state.fields[fieldName].isValid
 
             fields.push(
                 <InputField
-                key={field}
-                name={field}
-                placeholder={this.state.fields[field].placeholder}
-                onChange={this.validateField}
-                className={className}
-                type={this.state.fields[field].type}
+                    id={fieldName + "-field"}
+                    key={fieldName}
+                    name={fieldName}
+                    placeholder={this.state.fields[fieldName].placeholder}
+                    onChange={this.validateField}
+                    className={className}
+                    type={this.state.fields[fieldName].type}
                 />
             )
         }
@@ -79,9 +81,9 @@ export default class Form extends Component {
 
         return (
             <FieldSet>
-            <h4 className="h4">{this.title}</h4>
-            {fields}
-            <Button {...buttonOptions}/>
+                <h4 className="h4">{this.title}</h4>
+                {fields}
+                <Button {...buttonOptions}/>
             </FieldSet>
         )
     }
@@ -105,6 +107,7 @@ export default class Form extends Component {
         else {
             fields[fieldName].isValid = this.isFieldValid(fieldName, value)
 
+            // check refs
             if(fields[fieldName].ref) {
                 let isValid =
                 fields[fieldName].value === fields[fields[fieldName].ref].value
