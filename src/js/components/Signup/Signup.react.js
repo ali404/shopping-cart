@@ -9,6 +9,7 @@ export default class Signup extends Component {
 
         this.signupSchema = JSON.stringify({
             title: 'Signup',
+            buttonLabel: 'Signup',
             required: ['username', 'password', 'repeatPassword'],
             fields: {
                 username: {

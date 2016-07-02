@@ -35,8 +35,12 @@ export class Heart extends Component {
                 y="0px"
                 width={size}
                 height={size}
-                viewBox="0 0 48 48">
-
+                viewBox="0 0 48 48"
+                style={{
+                    position: 'relative',
+                    top: '2px',
+                    margin: '0 1px 0 2px'
+                }}>
                 <g transform="translate(0, 0)">
                     <path
                         fill={fillColor}

@@ -9,6 +9,7 @@ export default class Login extends Component {
 
         this.loginSchema = JSON.stringify({
             title: 'Login',
+            buttonLabel: 'Login',
             required: ['username', 'password'],
             fields: {
                 username: {

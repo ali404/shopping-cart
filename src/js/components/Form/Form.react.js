@@ -77,7 +77,7 @@ export default class Form extends Component {
 
         // button label to be specified in schema
         let buttonOptions = {
-            label: 'Login',
+            label: this.schema.buttonLabel,
             onClick: this.onSubmit
         }
 
