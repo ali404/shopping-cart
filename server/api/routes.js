@@ -6,5 +6,6 @@ const auth = require('./auth.js')
 module.exports = function(app) {
     var api = express.Router()
     require('./user.js')(app, api)
+    require('./shop.js')(app, api)
     return api
 }
