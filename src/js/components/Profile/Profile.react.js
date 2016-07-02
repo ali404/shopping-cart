@@ -16,7 +16,6 @@ export default class Profile extends Component {
                         <div>
                             <div>Role: {this.props.user.role}</div>
                             <div>Username: {this.props.user.username}</div>
-                            <ShopCreatorContainer />
                         </div>
                     ) : (
                         <div>Loading...</div>

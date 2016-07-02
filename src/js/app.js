@@ -7,6 +7,7 @@ import Home from './routes/Home.route'
 import Login from './routes/Login.route'
 import Signup from './routes/Signup.route'
 import Profile from './routes/Profile.route'
+import CreateShop from './routes/CreateShop.route'
 
 import AuthStore from './stores/AuthStore'
 
@@ -49,7 +50,23 @@ let routes = (
             <Route
                 path="/profile"
                 component={Profile}
-                onEnter={authenticatedRoute} />
+                onEnter={authenticatedRoute}>
+
+                <Route
+                    path="/profile/add-shop"
+                    component={CreateShop} />
+                {/*<Route
+                    path="/add-item"
+                    component={CreateItem} />
+                <Route
+                    path="view-shops"
+                    component={ViewShops} />
+                <Route
+                    path="/view-shops/:shopName" />
+                <Route
+                    path="/view-items/:itemName" />*/}
+
+            </Route>
         </Route>
     </Router>
 )

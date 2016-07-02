@@ -14,8 +14,7 @@ export default class ShopCreatorContainer extends Component {
 
     render() {
         return (
-            <ShopCreator
-                onSubmit={this.saveStore} />
+            <ShopCreator onSubmit={this.saveStore} />
         )
     }
 
