@@ -1,11 +1,16 @@
 import React, {Component} from 'react'
 
+import Menu from './Menu'
+import {Link} from 'react-router'
+
 export default class AppBar extends Component {
     render() {
         const {
-            title,
+            logo,
             className,
             onButtonClick,
+            links,
+            children,
             ...other,
         } = this.props
 
@@ -16,13 +21,20 @@ export default class AppBar extends Component {
             <header
                 {...other}
                 className={classNames}>
-                <div
+                {/*<div
                     className="header-switch"
                     onClick={this.props.onButtonClick}>
                     <i className="material-icons md-light">menu</i>
-                </div>
-                <div className="header-title">
-                    {title}
+                </div>*/}
+                <Link
+                    className="header-logo"
+                    to="/">
+                    {logo}
+                </Link>
+                <div className="header-links">
+                    <Menu>
+                        {links}
+                    </Menu>
                 </div>
             </header>
         )

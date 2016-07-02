@@ -1,19 +1,21 @@
 .header
    align-items: center
-   background-color: $baseColor
-   box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28)
+   box-sizing: border-box
    display: flex
    height: $headerHeight
-   padding: 0px 18px
-   position: fixed
+   padding: 0px 36px
+   position: absolute
    width: 100%
    transition: all 0.2s ease-in
    top: 0
 
-.header-title
+.header-logo
    @extend .h5
    color: $black100
-   margin-left: 8px
+   padding: 0 8px
+
+   &:hover
+      background-color: $black700-transparent
 
 .header-switch
    color: $black100
@@ -23,3 +25,7 @@
 
    &:hover
       cursor: pointer
+
+
+.header-links
+   margin-left: auto

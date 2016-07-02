@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+import {Container} from '../../styles/Grid'
+
 export default class Profile extends Component {
     constructor() {
         super()
@@ -7,7 +9,7 @@ export default class Profile extends Component {
 
     render() {
         return (
-            <div>
+            <Container>
                 {
                     this.props.user ? (
                         <div>
@@ -18,7 +20,7 @@ export default class Profile extends Component {
                         <div>Loading...</div>
                     )
                 }
-            </div>
+            </Container>
         )
     }
 }

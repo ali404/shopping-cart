@@ -2,28 +2,32 @@
 .h2,
 .h3,
 .h4
-   font-family: 'Roboto regular'
+   font-family: 'Source Sans Pro', sans-serif
 
 .h5,
 .h6,
 .p
-   font-family: 'Roboto regular'
+   font-family: 'Lato', sans-serif
 
-@media screen and (min-width: 568px) and (max-width: 767px)
+@media screen and (max-width: 567px)
    html
       font-size: 8px
 
-@media screen and (min-width: 768px) and (max-width: 1023px)
+@media screen and (min-width: 568px) and (max-width: 767px)
    html
       font-size: 9px
+
+@media screen and (min-width: 768px) and (max-width: 1023px)
+   html
+      font-size: 10px
 
 @media screen and (min-width: 1024px) and (max-width: 1279px)
    html
-      font-size: 9px
+      font-size: 11px
 
 @media screen and (min-width: 1280px)
    html
-      font-size: 10px
+      font-size: 12px
 
 .h1, h1
    font-size: $h1
@@ -45,6 +49,3 @@
 
 .p
    font-size: $p
-
-.light
-   font-family: 'Roboto light'

@@ -8,6 +8,8 @@ import MenuItemIcon from '../../styles/MenuItemIcon'
 
 import AuthActions from '../../actions/AuthActions'
 
+import Logo from '../../styles/Logo'
+
 export default class Header extends Component {
     constructor() {
         super()
@@ -16,31 +18,12 @@ export default class Header extends Component {
     render() {
         let links = []
 
-
-        // separate links, put them in a json schema.
-        // create links based on schmea. it is just better....
-        links.push(
-            <MenuItem key="home">
-                <Link
-                    activeClassName="active"
-                    to="/">
-                    <MenuItemIcon
-                        icon="bubble_chart"
-                    />
-                    <span>Home</span>
-                </Link>
-            </MenuItem>
-        )
-
         if(this.props.isAuthenticated) {
             links.push(
                 <MenuItem key="profile">
                     <Link
                         activeClassName="active"
                         to="/profile">
-                        <MenuItemIcon
-                            icon="keyboard_arrow_right"
-                        />
                         <span>Profile</span>
                     </Link>
                 </MenuItem>
@@ -50,9 +33,6 @@ export default class Header extends Component {
                 <MenuItem key="logout">
                     <a
                         onClick={this.logoutUser} >
-                        <MenuItemIcon
-                            icon="exit_to_app"
-                        />
                         <span>Logout</span>
                     </a>
                 </MenuItem>
@@ -65,9 +45,6 @@ export default class Header extends Component {
                     <Link
                         activeClassName="active"
                         to="/signup">
-                        <MenuItemIcon
-                             icon="person_add"
-                        />
                         <span>Signup</span>
                     </Link>
                 </MenuItem>
@@ -78,25 +55,21 @@ export default class Header extends Component {
                     <Link
                         activeClassName="active"
                         to="/login">
-                        <MenuItemIcon
-                            icon="keyboard_arrow_right"
-                        />
                         <span>Login</span>
                     </Link>
                 </MenuItem>
             )
         }
 
+        let logo = <Logo />
+
         return (
-            <div>
-                <AppBar
-                    title="Title"
-                    onButtonClick={this.onButtonClick}
-                />
-                <Menu open={this.props.isMenuOpen}>
-                    {links}
-                </Menu>
-            </div>
+            <AppBar
+                logo={logo}
+                onButtonClick={this.onButtonClick}
+                links={links}
+            >
+            </AppBar>
         )
     }
 
