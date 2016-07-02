@@ -39,7 +39,6 @@ NavigationStore.dispatchToken = AppDispatcher.register(payload => {
 
     switch(actionType) {
         case AuthConstants.LOGIN:
-            console.log(1)
             NavigationStore.navigateProfile()
 
             NavigationStore.emitChange()

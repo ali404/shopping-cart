@@ -1,7 +1,7 @@
 import AuthStore from '../stores/AuthStore'
 import request from 'superagent/lib/client'
 
-export default class AuthApi {
+export default class AuthAPI {
 
     /*
     *   Uses Jwt {String} provided by AuthStore

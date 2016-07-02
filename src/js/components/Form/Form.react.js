@@ -118,7 +118,9 @@ export default class Form extends Component {
                 fields[fieldName].isValid = undefined
             }
             else {
-                fields[fieldName].isValid = this.isFieldValid(fieldName, value)
+                if(this.props.validators && this.props.validators[fieldName]) {
+                    fields[fieldName].isValid = this.isFieldValid(fieldName, value)    
+                }
 
                 // check refs
                 if(fields[fieldName].ref) {

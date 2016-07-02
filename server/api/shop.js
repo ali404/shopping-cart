@@ -97,7 +97,7 @@ module.exports = function(app, api) {
     **/
     api.post('/shop', auth.protectedRoute, function(req, res) {
         var token = req.token
-        var shopTitle = req.body.shopName || ''
+        var shopName = req.body.shopName || ''
         var shopDescription = req.body.shopDescription || ''
 
         if(!shopName || !shopDescription) {
