@@ -16,14 +16,11 @@ export default class AdminMenu extends Component {
                     </Link>
                 </DrawerItem>
                 <DrawerItem
-                    text="Label 2"
-                    hasChildren={true}>
-                    <DrawerItem>
-                        link 1
-                    </DrawerItem>
+                    text="add-item">
+                    <Link to="/profile/add-product">
+                        Add Item
+                    </Link>
                 </DrawerItem>
-                <DrawerItem text="Label 3" />
-                <DrawerItem text="Label 4" />
             </Drawer>
         )
     }

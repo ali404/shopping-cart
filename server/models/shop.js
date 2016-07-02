@@ -8,7 +8,7 @@ module.exports = mongoose.model('Shop', new Schema({
     brand: String,
     createdBy: String,
     dateCreated: Date,
-    items: [
+    products: [
         {
             name: String,
             dateCreated: Date,

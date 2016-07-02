@@ -19,7 +19,7 @@ export default class ShopCreator extends Component {
                 shopDescription: {
                     type: 'text',
                     title: 'Shop Description',
-                    placeholder: 'Shop Description'
+                    placeholder: 'Shop description...'
                 }
             }
         })
