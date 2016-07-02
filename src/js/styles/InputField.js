@@ -13,6 +13,19 @@ export default class InputField extends Component {
         const temp = className || ''
         const classNames = "input " + temp
 
+        if(type==='checkbox') {
+            return (
+                <label>
+                    <input
+                        {...other}
+                        type={type}
+                        className={className}
+                    />
+                    {placeholder}
+                </label>
+            )
+        }
+
         return (
             <input
                 {...other}

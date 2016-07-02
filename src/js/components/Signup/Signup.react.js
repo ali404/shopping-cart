@@ -27,6 +27,11 @@ export default class Signup extends Component {
                     title: 'Repeat password',
                     placeholder: 'Repeat password...',
                     ref: 'password'
+                },
+                isAdmin: {
+                    type: 'checkbox',
+                    title: 'Admin',
+                    placeholder: 'Admin'
                 }
             },
             refs: [
@@ -51,6 +56,11 @@ export default class Signup extends Component {
     }
 
     onSubmit = (values) => {
-        AuthActions.signup(values.username, values.password)
+        console.log(!!values.isAdmin)
+        AuthActions.signup({
+            'username': values.username,
+            'password': values.password,
+            'admin': !!values.isAdmin
+        })
     }
 }

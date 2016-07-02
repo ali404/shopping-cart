@@ -49,27 +49,33 @@ export default class Form extends Component {
         let buttonEnabled = true
 
         for(let fieldName in this.state.fields) {
-            let className = classNames({
-                'error': this.state.fields[fieldName].isValid === false,
-                'valid': this.state.fields[fieldName].isValid === true
-            })
+            let field = this.state.fields[fieldName]
 
-            buttonEnabled = buttonEnabled
-                && this.state.fields[fieldName].isValid
+            if(field.isValid !== undefined) {
+                buttonEnabled = buttonEnabled && field.isValid
+            }
+
+            let className = classNames({
+                'error': field.isValid === false,
+                'valid': field.isValid === true
+            })
 
             fields.push(
                 <InputField
                     id={fieldName + "-field"}
                     key={fieldName}
                     name={fieldName}
-                    placeholder={this.state.fields[fieldName].placeholder}
+                    placeholder={field.placeholder}
                     onChange={this.validateField}
+                    onClick={this.validateField}
                     className={className}
-                    type={this.state.fields[fieldName].type}
+                    type={field.type}
                 />
             )
+
         }
 
+        // button label to be specified in schema
         let buttonOptions = {
             label: 'Login',
             onClick: this.onSubmit
@@ -97,23 +103,31 @@ export default class Form extends Component {
     validateField = (e) => {
         let fieldName = e.target.name
         let value = e.target.value
+        let checked = e.target.checked
+
+        // isolate `fields`, mutate this variable, and then setState
         let fields = this.state.fields
 
-        fields[fieldName].value = value
-
-        if(value.length === 0) {
-            fields[fieldName].isValid = undefined
+        if(fields[fieldName].type === 'checkbox') {
+            fields[fieldName].checked = checked
         }
         else {
-            fields[fieldName].isValid = this.isFieldValid(fieldName, value)
+            fields[fieldName].value = value
 
-            // check refs
-            if(fields[fieldName].ref) {
-                let isValid =
-                fields[fieldName].value === fields[fields[fieldName].ref].value
+            if(value.length === 0) {
+                fields[fieldName].isValid = undefined
+            }
+            else {
+                fields[fieldName].isValid = this.isFieldValid(fieldName, value)
 
-                fields[fieldName].isValid = isValid
-                fields[fields[fieldName].ref].isValid = isValid
+                // check refs
+                if(fields[fieldName].ref) {
+                    let isValid =
+                    fields[fieldName].value === fields[fields[fieldName].ref].value
+
+                    fields[fieldName].isValid = isValid
+                    fields[fields[fieldName].ref].isValid = isValid
+                }
             }
         }
 
@@ -146,8 +160,15 @@ export default class Form extends Component {
     onSubmit = () =>  {
         //create an objdct with the values of fields
         let values = {}
-        for(let field in this.state.fields) {
-            values[field] = this.state.fields[field].value
+        for(let fieldName in this.state.fields) {
+            let field = this.state.fields[fieldName]
+
+            if(field.type === 'checkbox') {
+                values[fieldName] = field.checked
+            }
+            else {
+                values[fieldName] = field.value
+            }
         }
 
         this.props.onSubmit(values)

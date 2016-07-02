@@ -5,9 +5,9 @@ import AuthAPI from '../utils/Auth.api'
 
 export default class AuthActions {
 
-    static login(username, password) {
+    static login(fields) {
         AuthAPI
-            .login(username, password)
+            .login(fields)
             .then((payload) => {
                 if(payload.success) {
                     AppDispatcher.dispatch({
@@ -27,9 +27,9 @@ export default class AuthActions {
             })
     }
 
-    static signup(username, password) {
+    static signup(fields) {
         AuthAPI
-            .signup(username, password)
+            .signup(fields)
             .then((payload) => {
                 if(payload.success) {
                     AppDispatcher.dispatch({

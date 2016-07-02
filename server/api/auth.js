@@ -8,7 +8,10 @@ module.exports = function(app) {
     *   Secures API Endpoint only for Authenticated users
     */
     var protectedRoute = function(req, res, next) {
-        var token = req.body.token || req.query.token || req.headers['x-access-token']
+        // get token
+        var token = req.body.token
+            || req.query.token
+            || req.headers['x-access-token']
 
         if(token) {
             jwt.verify(token, app.get('secret'), function(err, decoded) {

@@ -79,6 +79,7 @@ module.exports = function(app, api) {
 
     /*
     *   Returns all users
+    *   TODO: protect passwords from showing
     */
     api.get('/users', function(req, res) {
         User.find({}, function(err, users) {
@@ -96,8 +97,15 @@ module.exports = function(app, api) {
     api.post('/user', function(req, res, next) {
         var username = req.body.username || ''
         var password = req.body.password || ''
+        var isAdmin = req.body.admin
 
-        if(!username || !password) {
+        console.log("admin:" + isAdmin)
+
+        if(
+            !username
+            || !password
+            || !(isAdmin === true || isAdmin === false)
+        ) {
             res.status(400).send({
                 success: false,
                 message: 'Request failed, parameters not specified'
@@ -119,7 +127,8 @@ module.exports = function(app, api) {
                 else if(!user) {
                     var user = new User({
                         username: username,
-                        password: auth.createHash(password)
+                        password: auth.createHash(password),
+                        admin: isAdmin
                     })
 
                     user.save(function(err) {

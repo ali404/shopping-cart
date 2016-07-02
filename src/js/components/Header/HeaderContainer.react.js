@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import Header from './Header.react'
+
 import HeaderStore from '../../stores/HeaderStore'
+import AuthStore from '../../stores/AuthStore'
+
 import HeaderActions from '../../actions/HeaderActions'
 
 export default class HeaderContainer extends Component {
@@ -12,16 +15,19 @@ export default class HeaderContainer extends Component {
 
     _getMenuToggleState = () => {
         return {
-            isMenuOpen: HeaderStore.getMenuToggleState()
+            isMenuOpen: HeaderStore.getMenuToggleState(),
+            isAuthenticated: AuthStore.isAuthenticated()
         }
     }
 
     componentDidMount() {
         HeaderStore.addChangeListener(this._onChange)
+        AuthStore.addChangeListener(this._onChange)
     }
 
     componentWillUnmount() {
         HeaderStore.removeChangeListener(this._onChange)
+        AuthStore.addChangeListener(this._onChange)
     }
 
     _onChange = () => {
@@ -33,6 +39,7 @@ export default class HeaderContainer extends Component {
             <Header
                 isMenuOpen={this.state.isMenuOpen}
                 onButtonClick={this.onButtonClick}
+                isAuthenticated={this.state.isAuthenticated}
             />
         )
     }

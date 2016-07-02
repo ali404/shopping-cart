@@ -41,6 +41,9 @@ export default class Login extends Component {
     }
 
     onSubmit = (values) => {
-        AuthActions.login(values.username, values.password)
+        AuthActions.login({
+            'username': values.username,
+            'password': values.password
+        })
     }
 }

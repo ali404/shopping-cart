@@ -8,6 +8,30 @@ import Login from './routes/Login.route'
 import Signup from './routes/Signup.route'
 import Profile from './routes/Profile.route'
 
+import AuthStore from './stores/AuthStore'
+
+function unauthenticatedRoute(nextState, replace) {
+    if(AuthStore.isAuthenticated()) {
+        replace({
+            pathname: '/profile',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        })
+    }
+}
+
+function authenticatedRoute(nextState, replace) {
+    if(!AuthStore.isAuthenticated()) {
+        replace({
+            pathname: '/login',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        })
+    }
+}
+
 let routes = (
     <Router history={browserHistory}>
         <Route component={App}>
@@ -16,13 +40,16 @@ let routes = (
                 component={Home} />
             <Route
                 path="/login"
-                component={Login} />
+                component={Login}
+                onEnter={unauthenticatedRoute} />
             <Route
                 path="/signup"
-                component={Signup} />
+                component={Signup}
+                onEnter={unauthenticatedRoute} />
             <Route
                 path="/profile"
-                component={Profile} />
+                component={Profile}
+                onEnter={authenticatedRoute} />
         </Route>
     </Router>
 )

@@ -61,14 +61,11 @@ export default class AuthApi {
     *   AJAX request returns the JWT Token
     *   returns {Promise} with the AJAX request
     */
-    static login(username, password) {
+    static login(fields) {
         return new Promise((resolve, reject) => {
             request
                 .post('/api/user/login')
-                .send({
-                    username: username,
-                    password: password
-                })
+                .send(fields)
                 .end((err, payload) => {
                     if(err) {
                         reject(err)
@@ -89,14 +86,12 @@ export default class AuthApi {
     *   Signs up the user, if the credentials are OK
     *   returns {Promise} with the AJAX request
     */
-    static signup(username, password) {
+    static signup(fields) {
+        // maybe validate fields at least here?
         return new Promise((resolve, reject) => {
             request
                 .post('/api/user')
-                .send({
-                    username: username,
-                    password: password
-                })
+                .send(fields)
                 .end((err, payload) => {
                     if(err) {
                         reject(err)
