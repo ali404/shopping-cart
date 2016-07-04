@@ -5,7 +5,7 @@ import FieldSet from '../../styles/FieldSet'
 import InputField from '../../styles/InputField'
 import Button from '../../styles/Button'
 
-import ErrorLogger from '../../actions/ErrorLoggerActions'
+import ErrorLogger from '../../stores/ErrorLoggerStore'
 
 export default class Form extends Component {
     constructor(props) {
@@ -14,13 +14,15 @@ export default class Form extends Component {
         // immutable attributes
         this.schema = JSON.parse(props.schema)
         this.validators = this.props.validators
+
+        // validate now, after setting the title and state
+        this.validateForm(this.schema, this.validators)
+
         this.title = this.schema.title
 
         this.state = {
             fields: this.configureFields()
         }
-
-        this.validateForm(this.schema, this.validators)
     }
 
     /**
@@ -70,7 +72,7 @@ export default class Form extends Component {
     validateTitle(schema) {
         if(
             !schema.title
-            && typeof schema.title !== 'string'
+            || typeof schema.title !== 'string'
         ) {
             ErrorLogger.throwFormSchemaValidationError(
                 'Form Schema requires a `title` field of type String'
@@ -93,8 +95,8 @@ export default class Form extends Component {
     **/
     validateFields(schema) {
         if(
-            schema.fields === null
-            || typeof schema.fields !== 'object') {
+            !schema.fields
+            || schema.fields.constructor !== Object) {
 
             ErrorLogger.throwFormSchemaValidationError(
                 'Form Schema requires a `fields` field of type Object'
@@ -102,9 +104,55 @@ export default class Form extends Component {
             return false
         }
         else {
+            this.validateFieldValues(schema.field)
+            this.validateFieldNames(schema.field)
             this.validateFieldTypes(schema.fields)
             return true;
         }
+    }
+
+    /**
+    *   fields {Object}
+    *
+    *   validates the object of the properties in field
+    *   Each property should link to an object
+    *
+    *   Throws an error to the logger if the above fail
+    *   Returns true {Boolean} if fields are objects
+    *
+    **/
+    validateFieldValues(fields) {
+        for(let fieldName in fields) {
+            if(fields[fieldName].constructor !== Object) {
+                ErrorLogger(
+                    'Each field value in `fields` property of Form Schema should be an Object'
+                )
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+    *   fields {Object}
+    *
+    *   validates fields, each key should be a String
+    *
+    *   Throws an error to the logger if the above fail
+    *   Returns true {Boolean} if each key in `fields` is a String
+    *
+    **/
+    validateFieldNames(fields) {
+        for(let fieldName in fields) {
+            if(typeof fieldName !== 'string') {
+                ErrorLogger.throwFormSchemaValidationError(
+                    'Each field name specified as a key in Form Schema should be of type String'
+                )
+                return false
+            }
+        }
+
+        return true
     }
 
     /**
@@ -258,6 +306,12 @@ export default class Form extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            message: nextProps.message
+        })
+    }
+
     /**
     *
     *
@@ -291,7 +345,6 @@ export default class Form extends Component {
                     type={field.type}
                 />
             )
-
         }
 
         // button label to be specified in schema
@@ -308,8 +361,13 @@ export default class Form extends Component {
         return (
             <FieldSet>
                 <h4 className="h4">{this.title}</h4>
+                {
+                    this.state.message ? (
+                        <p>{this.state.message}</p>
+                    ) : null
+                }
                 {fields}
-                <Button {...buttonOptions}/>
+                <Button {...buttonOptions} />
             </FieldSet>
         )
     }

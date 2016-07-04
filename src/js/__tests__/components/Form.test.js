@@ -82,61 +82,196 @@ describe('JSON Form Schema', () => {
         expect(form.find('.Form-button[disabled]')).to.have.length(1)
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should display error messages', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should give error when required fields are not completed', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should display error when inputs are not valid', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should check refs fields for equality', () => {
 
     })
 
     /***** VALIDATING FORM SCHEMA *****/
 
-    it('should not accept schema without fields', () => {
+    /**
+    *
+    *
+    *
+    **/
+    it('should not accept schema with invalid fields property', () => {
         formSchema = JSON.stringify({
             title: 'Something'
         })
 
-        form = mount(<Form schema={formSchema} />)
-
-        expect(form)
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
         .to
-        .throw(Error, 'Form Schema requires a `fields` field of type Object')
+        .throw('Form Schema requires a `fields` field of type Object')
+
+        formSchema = JSON.stringify({
+            title: 'Title',
+            fields: new Array()
+        })
+
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
+        .to
+        .throw('Form Schema requires a `fields` field of type Object')
 
     })
 
-    it('should not accept schema without title', () => {
+    /**
+    *
+    *
+    *
+    **/
+    it('should not accept schema with an invalid title', () => {
+        formSchema = JSON.stringify({
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                }
+            }
+        })
 
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
+        .to
+        .throw('Form Schema requires a `title` field of type String')
+
+        formSchema = JSON.stringify({
+            title: ['title'],
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                }
+            }
+        })
+
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
+        .to
+        .throw('Form Schema requires a `title` field of type String')
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept invalid schema fields', () => {
+        formSchema = JSON.stringify({
+            title: 'Title',
+            fields: {
+                username: new Array(),
+                password: {
+                    type: 'text',
+                    title: 'Password',
+                    placeholder: 'Password...'
+                }
+            }
+        })
 
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
+        .to
+        .throw('Each field value in `fields` property of Form Schema should be an Object')
+
+        let obj = {
+            title: 'Title',
+            fields: {}
+        }
+
+        obj.fields[new Object()] = {
+            type:text
+        }
+
+        formSchema = JSON.stringify(obj)
+
+        expect(() => {
+            mount(<Form schema={formSchema} />)
+        })
+        .to
+        .throw('Each field name specified as a key in Form Schema should be of type String')
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept validators that are not functions', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept invalid HTML field types', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept inexistent required fields', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept duplicate fields', () => {
 
     })
 
+    /**
+    *
+    *
+    *
+    **/
     it('should not accept uncircular refs', () => {
 
     })

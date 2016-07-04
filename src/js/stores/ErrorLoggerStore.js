@@ -6,7 +6,7 @@ import ErrorConstants from '../constants/ErrorConstants'
 
 class ErrorLoggerStoreClass extends EventEmitter {
 
-    throwError(message) {
+    throwFormSchemaValidationError(message) {
         throw new Error(message)
     }
 
@@ -29,10 +29,7 @@ ErrorLoggerStore.dispatchToken = AppDispatcher.register(payload => {
     let actionType = payload.actionType
 
     switch(actionType) {
-        case ErrorConstants.ERR_FORM_SCHEMA_VALIDATION:
-            ErrorLoggerStore.throwError(payload.message)
-            ErrorLoggerStore.emitChange()
-            break
+
     }
 
     return true

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Login from './Login.react'
 
 import AuthStore from '../../stores/AuthStore'
+import AuthActions from '../../actions/AuthActions'
 
 export default class LoginContainer extends Component {
     constructor() {
@@ -30,7 +31,17 @@ export default class LoginContainer extends Component {
 
     render() {
         return (
-            <Login />
+            <Login
+                loginSucceeded={loginSucceeded}
+                onSubmit={this.onSubmit}
+            />
         )
+    }
+
+    onSubmit = (values) => {
+        AuthActions.login({
+            'username': values.username,
+            'password': values.password
+        })
     }
 }

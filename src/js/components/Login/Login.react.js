@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Form from '../Form/Form.react'
 import Security from '../../utils/Security.api'
-import AuthActions from '../../actions/AuthActions'
 
 export default class Login extends Component {
     constructor() {
@@ -32,19 +31,21 @@ export default class Login extends Component {
     }
 
     render() {
+        let message = ''
+        if(this.props.loginSucceeded) {
+            message = 'Success'
+        }
+        else {
+            message = 'Fail'
+        }
+
         return (
             <Form
                 schema={this.loginSchema}
                 validators={this.validators}
-                onSubmit={this.onSubmit}
+                onSubmit={this.props.onSubmit}
+                message={message}
             />
         )
-    }
-
-    onSubmit = (values) => {
-        AuthActions.login({
-            'username': values.username,
-            'password': values.password
-        })
     }
 }
