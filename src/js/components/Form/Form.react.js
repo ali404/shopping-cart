@@ -5,6 +5,8 @@ import FieldSet from '../../styles/FieldSet'
 import InputField from '../../styles/InputField'
 import Button from '../../styles/Button'
 
+import ErrorLogger from '../../actions/ErrorLoggerActions'
+
 export default class Form extends Component {
     constructor(props) {
         super(props)
@@ -70,7 +72,9 @@ export default class Form extends Component {
             !schema.title
             && typeof schema.title !== 'string'
         ) {
-            // throw error
+            ErrorLogger.throwFormSchemaValidationError(
+                'Form Schema requires a `title` field of type String'
+            )
         }
         else {
             return true;
@@ -92,7 +96,10 @@ export default class Form extends Component {
             schema.fields === null
             || typeof schema.fields !== 'object') {
 
-            // throw error
+            ErrorLogger.throwFormSchemaValidationError(
+                'Form Schema requires a `fields` field of type Object'
+            )
+            return false
         }
         else {
             this.validateFieldTypes(schema.fields)
@@ -113,22 +120,34 @@ export default class Form extends Component {
     *   Throws an error to the logger if the above fail
     *   Return true {Boolean} if it succeeds
     **/
-    validateRequredFields(schema) {
+    validateRequiredFields(schema) {
         if(schema.required) {
             if(schema.required.constructor === Array) {
                 for(let i=0; i< schema.required.length; i++) {
                     let fieldName = schema.required[i]
 
                     if(typeof fieldName !== 'string') {
-                        // throw error
+                        ErrorLogger.throwFormSchemaValidationError(
+                            'Elements specified in `required` property' +
+                            ' should be of type String'
+                        )
                         return false
                     }
                     else if(!schema.fields[fieldName]) {
-                        // throw error
+                        ErrorLogger.throwFormSchemaValidationError(
+                            'The fields specified in the `required` property' +
+                            ' should appear in `fields` property of the schema'
+                        )
                         return false
                     }
-                    else if(checkForDuplicates(fieldName, schema.required)) {
-                        // throw error
+                    else if(this.checkForDuplicates(
+                        fieldName,
+                        schema.required)
+                    ) {
+                        ErrorLogger.throwFormSchemaValidationError(
+                            'Form Schema does not allow duplicate names in ' +
+                            '`required` field'
+                        )
                         return false
                     }
                     else {
@@ -184,12 +203,16 @@ export default class Form extends Component {
         for(let fieldName in fields) {
             let field = fields[fieldName]
             if(!field.type && typeof field.type !== 'string') {
-                // throw error
+                ErrorLogger.throwFormSchemaValidationError(
+                    'Fields should have a `type` property of type String'
+                )
                 return false
             }
             else {
                 if(!types[field.type]) {
-                    // throw error
+                    ErrorLogger.throwFormSchemaValidationError(
+                        'Fields should have a valid HTML `type` property'
+                    )
                     return false
                 }
                 else {
@@ -218,17 +241,21 @@ export default class Form extends Component {
     *
     **/
     validateValidators(validators) {
-        for(validator in validators) {
-            if(validator instanceof Function) {
-                // it's ok
+        if(validators) {
+            for(let fieldName in validators) {
+                if(validators[fieldName] instanceof Function) {
+                    // it's ok
+                }
+                else {
+                    ErrorLogger.throwFormSchemaValidationError(
+                        'Each validators should be of type Function'
+                    )
+                    return false
+                }
             }
-            else {
-                //throw error
-                return false
-            }
-        }
 
-        return true
+            return true
+        }
     }
 
     /**

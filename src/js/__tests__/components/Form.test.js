@@ -14,7 +14,26 @@ describe('JSON Form Schema', () => {
         if(form) {
             form.unmount()
         }
+    })
 
+    function findFields() {
+        username = form.find('#username-field')
+        password = form.find('#password-field')
+    }
+
+    /***** VALIDATING FORM BEHAVIOUR *****/
+
+    it('should apply validators', () => {
+
+    })
+
+    /**
+    *   Tests for buttond disabled state
+    *   -> it should find a disabled button before everythin
+    *   -> it shouldn't find no disabled button when inputs are valid
+    *   -> it should find a disabled button if emtpying the inputs again
+    **/
+    it('should display the button disabled state', () => {
         formSchema = JSON.stringify({
             title: 'Form',
             required: ['username', 'password'],
@@ -32,33 +51,9 @@ describe('JSON Form Schema', () => {
             }
         })
 
-        form = mount(
-            <Form
-                schema={formSchema}
-            />
-        )
+        form = mount(<Form schema={formSchema} />)
+        findFields()
 
-        username = form.find('#username-field')
-        password = form.find('#password-field')
-    })
-
-    /***** VALIDATING FORM BEHAVIOUR *****/
-
-    it('should render', () => {
-        expect(form).to.exist
-    })
-
-    it('should apply validators', () => {
-
-    })
-
-    /**
-    *   Tests for buttond disabled state
-    *   -> it should find a disabled button before everythin
-    *   -> it shouldn't find no disabled button when inputs are valid
-    *   -> it should find a disabled button if emtpying the inputs again
-    **/
-    it('should display the button disabled state', () => {
         expect(form.find('.Form-button[disabled]')).to.have.length(1)
 
         username.simulate('change', {
@@ -106,6 +101,15 @@ describe('JSON Form Schema', () => {
     /***** VALIDATING FORM SCHEMA *****/
 
     it('should not accept schema without fields', () => {
+        formSchema = JSON.stringify({
+            title: 'Something'
+        })
+
+        form = mount(<Form schema={formSchema} />)
+
+        expect(form)
+        .to
+        .throw(Error, 'Form Schema requires a `fields` field of type Object')
 
     })
 
