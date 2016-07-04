@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import ShopConstants from '../constants/ShopConstants'
 
-import ShopAPI from '../utils/shop.api'
+import ShopAPI from '../utils/Shop.api'
 
 export default class ShopActions {
     static addShop(fields) {

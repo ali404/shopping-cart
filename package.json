@@ -5,7 +5,7 @@
   "main": "tests.webpack.js",
   "scripts": {
     "test": "karma start",
-    "dev": "webpack --watch --progress --colors --config ./webpack.dev.config.js",
+    "dev": "npm run clean && webpack --watch --progress --colors --config ./webpack.dev.config.js",
     "build": "webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node server.js",
     "clean": "rimraf ./public/build",
