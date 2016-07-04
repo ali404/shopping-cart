@@ -10,7 +10,7 @@ export default class Button extends Component {
         } = this.props
 
         const temp = className || ''
-        const classNames = "button" + temp
+        const classNames = 'button ' + temp
 
         return (
             <button

@@ -77,6 +77,7 @@ export default class Form extends Component {
 
         // button label to be specified in schema
         let buttonOptions = {
+            className: this.schema.title.replace(' ', '-') + '-button',
             label: this.schema.buttonLabel,
             onClick: this.onSubmit
         }
@@ -119,7 +120,7 @@ export default class Form extends Component {
             }
             else {
                 if(this.props.validators && this.props.validators[fieldName]) {
-                    fields[fieldName].isValid = this.isFieldValid(fieldName, value)    
+                    fields[fieldName].isValid = this.isFieldValid(fieldName, value)
                 }
 
                 // check refs
