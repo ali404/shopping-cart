@@ -9,7 +9,8 @@
     "build": "npm run clean && npm test && webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node server.js",
     "clean": "rimraf ./public/build",
-    "production": "npm run build && git push heroku master && npm run clean"
+    "production": "git push heroku master",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
