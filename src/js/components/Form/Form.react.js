@@ -11,11 +11,14 @@ export default class Form extends Component {
 
         // immutable attributes
         this.schema = JSON.parse(props.schema)
+        this.validators = this.props.validators
         this.title = this.schema.title
 
         this.state = {
             fields: this.configureFields()
         }
+
+        this.validateForm(this.schema, this.validators)
     }
 
     /**
@@ -29,7 +32,7 @@ export default class Form extends Component {
         for(let field in this.schema.fields) {
             fields[field] = this.schema.fields[field]
             fields[field].required = false
-            fields[field].isValid = undefined
+            fields[field].isValid = false
         }
 
         this.schema.required.forEach((field) => {
@@ -37,6 +40,195 @@ export default class Form extends Component {
         })
 
         return fields
+    }
+
+    /**
+    *
+    *
+    *
+    *
+    **/
+    validateForm(schema, validators) {
+        this.validateTitle(schema)
+        this.validateFields(schema)
+        this.validateRequiredFields(schema)
+        this.validateValidators(validators)
+    }
+
+    /**
+    *   schema {Object}
+    *
+    *   validates if the titles exists
+    *   checks if the title is a string
+    *
+    *   Throws an error to the logger if the above fail
+    *   Return true::{Boolean} if otherwise
+    *
+    **/
+    validateTitle(schema) {
+        if(
+            !schema.title
+            && typeof schema.title !== 'string'
+        ) {
+            // throw error
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+    *   schema {Object}
+    *
+    *   validates if the fields object exists
+    *   checks if the fields object is actualyl an objcet
+    *
+    *   Throws an error to the logger if the above fail
+    *   Calls the other validators and returns true
+    *
+    **/
+    validateFields(schema) {
+        if(
+            schema.fields === null
+            || typeof schema.fields !== 'object') {
+
+            // throw error
+        }
+        else {
+            this.validateFieldTypes(schema.fields)
+            return true;
+        }
+    }
+
+    /**
+    *   schema {Object}
+    *
+    *   Validates if required attribute exists
+    *   If it does not, returns true
+    *   In case it does:
+    *       Checks if `required` is an Array
+    *       Checks if every item in array is string
+    *       Checks if every item in array is a field specified in `schema.fields`
+    *
+    *   Throws an error to the logger if the above fail
+    *   Return true {Boolean} if it succeeds
+    **/
+    validateRequredFields(schema) {
+        if(schema.required) {
+            if(schema.required.constructor === Array) {
+                for(let i=0; i< schema.required.length; i++) {
+                    let fieldName = schema.required[i]
+
+                    if(typeof fieldName !== 'string') {
+                        // throw error
+                        return false
+                    }
+                    else if(!schema.fields[fieldName]) {
+                        // throw error
+                        return false
+                    }
+                    else if(checkForDuplicates(fieldName, schema.required)) {
+                        // throw error
+                        return false
+                    }
+                    else {
+                        // be happy, this field is ok
+                    }
+                }
+
+                return true
+            }
+        }
+    }
+
+    /**
+    *   element {Type}
+    *   array {Array[Type]}
+    *
+    *   Checks if `element` is unique in `array`
+    *
+    *   Returns true {Boolean} if there are duplicates
+    *   Returns false {Boolean} if it is unique
+    *   Returns false {Boolean} if there is no `element` in `array`
+    *
+    **/
+    checkForDuplicates(element, array) {
+        let recurrences = 0
+        for(let i=0; i<array.length; i++) {
+            if(array[i] === element) {
+                recurrences += 1
+            }
+        }
+
+        return recurrences > 1
+    }
+
+    /**
+    *   fields {Object}
+    *
+    *   Checks if the types of the field are specified,
+    *   string, and valid HTML input type
+    *
+    *   Throws an error if the above are valid
+    *   Return true {Boolean} if all fields have valid type
+    *
+    **/
+    validateFieldTypes(fields) {
+        let types = {
+            'text': true,
+            'password': true,
+            'checkbox': true,
+            'select': true
+        }
+
+        for(let fieldName in fields) {
+            let field = fields[fieldName]
+            if(!field.type && typeof field.type !== 'string') {
+                // throw error
+                return false
+            }
+            else {
+                if(!types[field.type]) {
+                    // throw error
+                    return false
+                }
+                else {
+                    // be happy and continue
+                }
+            }
+        }
+
+        return true
+    }
+
+    /**
+    *
+    **/
+    validateRefs(schema) {
+
+    }
+
+    /**
+    *   validators {Object[Function]}
+    *
+    *   checks if every validator in `validators` is a Function
+    *
+    *   Throws an error if the above is valid
+    *   Return true {Boolean} if the validators are valid
+    *
+    **/
+    validateValidators(validators) {
+        for(validator in validators) {
+            if(validator instanceof Function) {
+                // it's ok
+            }
+            else {
+                //throw error
+                return false
+            }
+        }
+
+        return true
     }
 
     /**
@@ -77,7 +269,7 @@ export default class Form extends Component {
 
         // button label to be specified in schema
         let buttonOptions = {
-            className: this.schema.title.replace(' ', '-') + '-button',
+            className: this.title.replace(' ', '-') + '-button',
             label: this.schema.buttonLabel,
             onClick: this.onSubmit
         }
@@ -96,37 +288,71 @@ export default class Form extends Component {
     }
 
 
-    /*
-    *   e {event}
+    /**
+    *   e {event::Object{
+    *        target::Object{
+    *            name: String,
+    *            value: String || checked: Boolen
+    *        }
+    *    }}
+    *
+    *   Validates field if the type of the field is `text` or `password`
+    *   Validates this field if it has an appropriate validator
+    *   If the field does not have a validator,
+    *       it is valid if the length is bigger than 0
+    *
+    *   For checkbox type, it does not validation,
+    *       It assignes to the field in the state variable the checked Boolean value
     *
     *
-    */
+    *   Mutates the state property of this class
+    *   Returns {undefined}
+    *
+    **/
     validateField = (e) => {
+        // initialise variables
         let fieldName = e.target.name
         let value = e.target.value
+        // variable used only when input type is checkbox
         let checked = e.target.checked
 
-        // isolate `fields`, mutate this variable, and then setState
+        // isolate `fields`, mutate this variable,
+        // then mutate the state by setState
         let fields = this.state.fields
 
+
+        // check if checkbox (there are no validators there)
         if(fields[fieldName].type === 'checkbox') {
             fields[fieldName].checked = checked
         }
+        // else if(fields[fieldName].type === 'select') {
+        //
+        //
+        // }
         else {
+            // set the value for later use
             fields[fieldName].value = value
 
+            //reject every field empty field
             if(value.length === 0) {
-                fields[fieldName].isValid = undefined
+                fields[fieldName].isValid = false
             }
             else {
                 if(this.props.validators && this.props.validators[fieldName]) {
-                    fields[fieldName].isValid = this.isFieldValid(fieldName, value)
+                    fields[fieldName].isValid =
+                        this.props.validators[fieldName](value)
+                }
+                else {
+                    // we could've just set it straight true
+                    // we already verified for empty inputs
+                    fields[fieldName].isValid = value.length !== 0
                 }
 
-                // check refs
+                // validate references
                 if(fields[fieldName].ref) {
                     let isValid =
-                    fields[fieldName].value === fields[fields[fieldName].ref].value
+                    fields[fieldName].value
+                        === fields[fields[fieldName].ref].value
 
                     fields[fieldName].isValid = isValid
                     fields[fields[fieldName].ref].isValid = isValid
@@ -137,22 +363,6 @@ export default class Form extends Component {
         this.setState({
             fields: fields
         })
-    }
-
-    /**
-    *
-    *
-    *
-    **/
-    isFieldValid(fieldName, value) {
-        let field = this.state.fields[name]
-
-        if(this.props.validators[fieldName]) {
-            return this.props.validators[fieldName](value)
-        }
-        else {
-            return undefined
-        }
     }
 
     /**
