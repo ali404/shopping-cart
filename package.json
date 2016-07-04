@@ -6,7 +6,7 @@
   "scripts": {
     "test": "karma start",
     "dev": "npm run clean && webpack --watch --progress --colors --config ./webpack.dev.config.js",
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
+    "build": "npm run clean && webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node server.js",
     "clean": "rimraf ./public/build",
     "production": "npm run clean && npm test && git push heroku master",
