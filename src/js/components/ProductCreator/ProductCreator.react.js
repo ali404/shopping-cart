@@ -3,8 +3,8 @@ import React, {Component} from 'react'
 import Form from '../Form/Form.react'
 
 export default class ItemCreator extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.itemSchema = JSON.stringify({
             title: 'Create Product',
@@ -20,6 +20,10 @@ export default class ItemCreator extends Component {
                     type: 'text',
                     title: 'Product Description',
                     placeholder: 'Product description...',
+                },
+                shopName: {
+                    type: 'select',
+                    items: props.shops
                 }
             }
         })

@@ -25,4 +25,20 @@ export default class ShopActions {
                 throw err
             })
     }
+
+    static getMyShops() {
+        ShopAPI
+            .getMyShops()
+            .then(payload => {
+                if(payload.success) {
+                    AppDispatcher.dispatch({
+                        actionType: ShopConstants.GET_MY_SHOPS,
+                        shops: payload.shops
+                    })
+                }
+                else {
+                    // dispatch something, dunno
+                }
+            })
+    }
 }

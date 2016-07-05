@@ -25,4 +25,20 @@ export default class ShopAPI {
                 })
         })
     }
+
+    static getMyShops() {
+        return new Promise((resolve, reject) => {
+            request
+                .get('/api/my/shops')
+                .set('x-access-token', AuthStore.getJwt())
+                .end((err, payload) => {
+                    if(err) {
+                        reject(err)
+                    }
+                    else {
+                        resolve(JSON.parse(payload.text))
+                    }
+                })
+        })
+    }
 }

@@ -5,6 +5,8 @@ import FieldSet from '../../styles/FieldSet'
 import InputField from '../../styles/InputField'
 import Button from '../../styles/Button'
 
+import Select from 'react-select'
+
 import ErrorLogger from '../../stores/ErrorLoggerStore'
 
 export default class Form extends Component {

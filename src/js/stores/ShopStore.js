@@ -4,8 +4,20 @@ import {EventEmitter} from 'events'
 
 const CHANGE_EVENT = 'change'
 
-export default class ShopStoreClass extends EventEmitter {
+class ShopStoreClass extends EventEmitter {
 
+    constructor() {
+        super()
+        this._shops = []
+    }
+
+    getShops() {
+        return this._shops
+    }
+
+    setShops(shops) {
+        this._shops = shops
+    }
 
     emitChange() {
         this.emit(CHANGE_EVENT)
@@ -35,5 +47,13 @@ ShopStore.dispatchToken = AppDispatcher.register(payload => {
             console.log(payload)
 
             break
+
+        case ShopConstants.GET_MY_SHOPS:
+            ShopStore.setShops(payload.shops)
+            ShopStore.emitChange()
+            
+            break
     }
 })
+
+export default ShopStore

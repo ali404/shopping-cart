@@ -4,5 +4,6 @@ export default keyMirror({
     'ADD_SHOP': null,
     'ADD_SHOP_ERROR': null,
     'ADD_ITEM': null,
-    'ADD_ITEM_ERROR': null
+    'ADD_ITEM_ERROR': null,
+    'GET_MY_SHOPS': null,
 })

@@ -37,6 +37,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.5.1",
+    "react-select": "^1.0.0-beta13",
     "superagent": "^2.0.0"
   },
   "devDependencies": {
