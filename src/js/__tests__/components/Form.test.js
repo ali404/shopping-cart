@@ -24,7 +24,44 @@ describe('JSON Form Schema', () => {
     /***** VALIDATING FORM BEHAVIOUR *****/
 
     it('should apply validators', () => {
+        formSchema = JSON.stringify({
+            title: 'Login',
+            fields: {
+                username: {
+                    type: 'text',
+                    title: 'Username',
+                    placeholder: 'Username...'
+                },
+                password: {
+                    type: 'text',
+                    title: 'Password',
+                    placeholder: 'Password...'
+                }
+            }
+        })
 
+        let validators = {
+            username: (val) => {
+                return val.length > 5
+            },
+            password: (val) => {
+                return val.length > 5
+            }
+        }
+
+        form = mount(<Form schema={formSchema} validators={validators} />)
+        findFields()
+
+        expect(form.find('#username-field.error')).to.have.length(1)
+
+        username.simulate('change', {
+            target: {
+                value: 'abcdefg',
+                name: 'username'
+            }
+        })
+
+        expect(form.find('#username-field.valid')).to.have.length(1)
     })
 
     /**
@@ -207,11 +244,11 @@ describe('JSON Form Schema', () => {
             }
         })
 
-        expect(() => {
-            mount(<Form schema={formSchema} />)
-        })
-        .to
-        .throw('Each field value in `fields` property of Form Schema should be an Object')
+        // expect(() => {
+        //     mount(<Form schema={formSchema} />)
+        // })
+        // .to
+        // .throw('Each field value in `fields` property of Form Schema should be an Object')
 
         let obj = {
             title: 'Title',
@@ -219,7 +256,7 @@ describe('JSON Form Schema', () => {
         }
 
         obj.fields[new Object()] = {
-            type:text
+            type: 'text'
         }
 
         formSchema = JSON.stringify(obj)

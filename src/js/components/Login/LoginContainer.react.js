@@ -32,7 +32,7 @@ export default class LoginContainer extends Component {
     render() {
         return (
             <Login
-                loginSucceeded={loginSucceeded}
+                loginSucceeded={this.state.loginSucceeded}
                 onSubmit={this.onSubmit}
             />
         )

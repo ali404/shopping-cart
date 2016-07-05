@@ -446,7 +446,8 @@ export default class Form extends Component {
         }
 
         this.setState({
-            fields: fields
+            fields: fields,
+            message: undefined
         })
     }
 
