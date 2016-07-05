@@ -45,9 +45,11 @@ export default class Form extends Component {
             }
         }
 
-        this.props.schema.required.forEach(fieldName => {
-            fields[fieldName].required = true
-        })
+        if(this.props.schema.required) {
+            this.props.schema.required.forEach(fieldName => {
+                fields[fieldName].required = true
+            })
+        }
 
         return fields
     }
@@ -81,8 +83,7 @@ export default class Form extends Component {
             || typeof schema.title !== 'string'
         ) {
             ErrorLogger.throwFormSchemaValidationError(
-                'Form Schema requires a `title` field of type String' +
-                ' :: ' + schema.title + ' given'
+                'Form Schema requires a `title` field of type String'
             )
         }
         else {
@@ -94,7 +95,7 @@ export default class Form extends Component {
     *   schema {Object}
     *
     *   validates if the fields object exists
-    *   checks if the fields object is actualyl an objcet
+    *   checks if the fields object is actually an object
     *
     *   Throws an error to the logger if the above fail
     *   Calls the other validators and returns true
@@ -111,8 +112,7 @@ export default class Form extends Component {
             return false
         }
         else {
-            this.validateFieldValues(schema.field)
-            this.validateFieldNames(schema.field)
+            this.validateFieldValues(schema.fields)
             this.validateFieldTypes(schema.fields)
             return true;
         }
@@ -131,34 +131,12 @@ export default class Form extends Component {
     validateFieldValues(fields) {
         for(let fieldName in fields) {
             if(fields[fieldName].constructor !== Object) {
-                ErrorLogger(
+                ErrorLogger.throwFormSchemaValidationError(
                     'Each field value in `fields` property of Form Schema should be an Object'
                 )
                 return false
             }
         }
-        return true
-    }
-
-    /**
-    *   fields {Object}
-    *
-    *   validates fields, each key should be a String
-    *
-    *   Throws an error to the logger if the above fail
-    *   Returns true {Boolean} if each key in `fields` is a String
-    *
-    **/
-    validateFieldNames(fields) {
-        for(let fieldName in fields) {
-            if(typeof fieldName !== 'string') {
-                ErrorLogger.throwFormSchemaValidationError(
-                    'Each field name specified as a key in Form Schema should be of type String'
-                )
-                return false
-            }
-        }
-
         return true
     }
 

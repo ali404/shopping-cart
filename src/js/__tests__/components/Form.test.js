@@ -24,7 +24,7 @@ describe('JSON Form Schema', () => {
     /***** VALIDATING FORM BEHAVIOUR *****/
 
     it('should apply validators', () => {
-        formSchema = JSON.stringify({
+        formSchema = {
             title: 'Login',
             fields: {
                 username: {
@@ -38,7 +38,7 @@ describe('JSON Form Schema', () => {
                     placeholder: 'Password...'
                 }
             }
-        })
+        }
 
         let validators = {
             username: (val) => {
@@ -71,7 +71,7 @@ describe('JSON Form Schema', () => {
     *   -> it should find a disabled button if emtpying the inputs again
     **/
     it('should display the button disabled state', () => {
-        formSchema = JSON.stringify({
+        formSchema = {
             title: 'Form',
             required: ['username', 'password'],
             fields: {
@@ -86,7 +86,7 @@ describe('JSON Form Schema', () => {
                     placeholder: 'Password...'
                 }
             }
-        })
+        }
 
         form = mount(<Form schema={formSchema} />)
         findFields()
@@ -163,9 +163,9 @@ describe('JSON Form Schema', () => {
     *
     **/
     it('should not accept schema with invalid fields property', () => {
-        formSchema = JSON.stringify({
+        formSchema = {
             title: 'Something'
-        })
+        }
 
         expect(() => {
             mount(<Form schema={formSchema} />)
@@ -173,10 +173,10 @@ describe('JSON Form Schema', () => {
         .to
         .throw('Form Schema requires a `fields` field of type Object')
 
-        formSchema = JSON.stringify({
+        formSchema = {
             title: 'Title',
             fields: new Array()
-        })
+        }
 
         expect(() => {
             mount(<Form schema={formSchema} />)
@@ -192,7 +192,7 @@ describe('JSON Form Schema', () => {
     *
     **/
     it('should not accept schema with an invalid title', () => {
-        formSchema = JSON.stringify({
+        formSchema = {
             fields: {
                 username: {
                     type: 'text',
@@ -200,7 +200,7 @@ describe('JSON Form Schema', () => {
                     placeholder: 'Username...'
                 }
             }
-        })
+        }
 
         expect(() => {
             mount(<Form schema={formSchema} />)
@@ -208,7 +208,7 @@ describe('JSON Form Schema', () => {
         .to
         .throw('Form Schema requires a `title` field of type String')
 
-        formSchema = JSON.stringify({
+        formSchema = {
             title: ['title'],
             fields: {
                 username: {
@@ -217,7 +217,7 @@ describe('JSON Form Schema', () => {
                     placeholder: 'Username...'
                 }
             }
-        })
+        }
 
         expect(() => {
             mount(<Form schema={formSchema} />)
@@ -232,7 +232,7 @@ describe('JSON Form Schema', () => {
     *
     **/
     it('should not accept invalid schema fields', () => {
-        formSchema = JSON.stringify({
+        formSchema = {
             title: 'Title',
             fields: {
                 username: new Array(),
@@ -242,30 +242,13 @@ describe('JSON Form Schema', () => {
                     placeholder: 'Password...'
                 }
             }
-        })
-
-        // expect(() => {
-        //     mount(<Form schema={formSchema} />)
-        // })
-        // .to
-        // .throw('Each field value in `fields` property of Form Schema should be an Object')
-
-        let obj = {
-            title: 'Title',
-            fields: {}
         }
-
-        obj.fields[new Object()] = {
-            type: 'text'
-        }
-
-        formSchema = JSON.stringify(obj)
 
         expect(() => {
             mount(<Form schema={formSchema} />)
         })
         .to
-        .throw('Each field name specified as a key in Form Schema should be of type String')
+        .throw('Each field value in `fields` property of Form Schema should be an Object')
     })
 
     /**

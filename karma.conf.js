@@ -3,7 +3,7 @@ const webpack = require('webpack')
 module.exports = function(config) {
     config.set({
         browsers: ['Chrome'],
-        singleRun: true,
+        singleRun: false,
         frameworks: ['mocha'],
         files: [
             'tests.webpack.js'
@@ -22,7 +22,7 @@ module.exports = function(config) {
         },
         reporters: ['mocha', 'coverage'],
         webpack: {
-            devtool: 'inline-source-map',
+            devtool: 'eval-source-map',
             module: {
                 loaders: [
                     {
