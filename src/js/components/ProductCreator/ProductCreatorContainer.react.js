@@ -41,7 +41,7 @@ export default class ItemCreator extends Component {
         console.log(this.state.shops)
         return (
             <ProductCreator
-                shops={this.state.shops}
+                shops={this.state.shops || []}
             />
         )
     }

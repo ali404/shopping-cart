@@ -7,7 +7,7 @@ export default class Signup extends Component {
     constructor() {
         super()
 
-        this.signupSchema = JSON.stringify({
+        this.signupSchema = {
             title: 'Signup',
             buttonLabel: 'Signup',
             required: ['username', 'password', 'repeatPassword'],
@@ -38,7 +38,7 @@ export default class Signup extends Component {
             refs: [
                 ['password', 'repeatPassword']
             ]
-        })
+        }
 
         this.validators = {
             username: Security.validateUsername,

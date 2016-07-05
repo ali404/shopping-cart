@@ -5,8 +5,10 @@ import Form from '../Form/Form.react'
 export default class ShopCreator extends Component {
     constructor() {
         super()
+    }
 
-        this.shopSchema = JSON.stringify({
+    render() {
+        let shopSchema = {
             title: 'Create Shop',
             buttonLabel: 'Create shop',
             required: ['shopName', 'shopDescription'],
@@ -22,13 +24,11 @@ export default class ShopCreator extends Component {
                     placeholder: 'Shop description...'
                 }
             }
-        })
-    }
+        }
 
-    render() {
         return (
             <Form
-                schema={this.shopSchema}
+                schema={shopSchema}
                 onSubmit={this.props.onSubmit} />
         )
     }

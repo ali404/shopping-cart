@@ -13,14 +13,8 @@ export default class Form extends Component {
     constructor(props) {
         super(props)
 
-        // immutable attributes
-        this.schema = JSON.parse(props.schema)
-        this.validators = this.props.validators
-
         // validate now, after setting the title and state
-        this.validateForm(this.schema, this.validators)
-
-        this.title = this.schema.title
+        this.validateForm(props.schema, props.validators)
 
         this.state = {
             fields: this.configureFields()
@@ -35,14 +29,24 @@ export default class Form extends Component {
     configureFields() {
         let fields = {}
 
-        for(let field in this.schema.fields) {
-            fields[field] = this.schema.fields[field]
-            fields[field].required = false
-            fields[field].isValid = false
+        for(let fieldName in this.props.schema.fields) {
+            let field = this.props.schema.fields[fieldName]
+
+            fields[fieldName] = {}
+            fields[fieldName].value = undefined
+            fields[fieldName].isValid = false
+            fields[fieldName].required = false
+
+            if(
+                field.type === 'select'
+                || field.type === 'checkbox'
+            ) {
+                fields[fieldName].isValid = true
+            }
         }
 
-        this.schema.required.forEach((field) => {
-            fields[field].required = true
+        this.props.schema.required.forEach(fieldName => {
+            fields[fieldName].required = true
         })
 
         return fields
@@ -77,7 +81,8 @@ export default class Form extends Component {
             || typeof schema.title !== 'string'
         ) {
             ErrorLogger.throwFormSchemaValidationError(
-                'Form Schema requires a `title` field of type String'
+                'Form Schema requires a `title` field of type String' +
+                ' :: ' + schema.title + ' given'
             )
         }
         else {
@@ -308,7 +313,9 @@ export default class Form extends Component {
         }
     }
 
+
     componentWillReceiveProps(nextProps) {
+        this.validateForm(nextProps.schema, nextProps.validators)
         this.setState({
             message: nextProps.message
         })
@@ -323,36 +330,71 @@ export default class Form extends Component {
         let fields = []
         let buttonEnabled = true
 
-        for(let fieldName in this.state.fields) {
-            let field = this.state.fields[fieldName]
+        // initialise fields based on props and state
+        for(let fieldName in this.props.schema.fields) {
+            let propsField = this.props.schema.fields[fieldName]
+            let stateField = this.state.fields[fieldName]
 
-            if(field.isValid !== undefined) {
-                buttonEnabled = buttonEnabled && field.isValid
+            // check if checkbox
+            switch(propsField.type) {
+                case 'select':
+                    if(propsField.items.length > 0) {
+                        fields.push(
+                            <Select
+                                id={fieldName+'-field'}
+                                value={stateField.value}
+                                key={fieldName}
+                                name={fieldName}
+                                options={propsField.items}
+                                onChange={this._changeSelectValue}
+                            />
+                        )
+                    }
+                break
+
+                case 'checkbox':
+                    fields.push(
+                        <InputField
+                            id={fieldName+'-field'}
+                            key={fieldName}
+                            name={fieldName}
+                            placeholder={propsField.placeholder}
+                            // change this into another function
+                            // checkboxes do not have validators
+                            onClick={this.validateField}
+                            type={propsField.type}
+                        />
+                    )
+                break
+
+                // default is for text and password
+                default:
+                    buttonEnabled = buttonEnabled && stateField.isValid
+
+                    let className = classNames({
+                        'error': stateField.isValid === false,
+                        'valid': stateField.isValid === true
+                    })
+
+                    fields.push(
+                        <InputField
+                            id={fieldName + "-field"}
+                            key={fieldName}
+                            name={fieldName}
+                            placeholder={propsField.placeholder}
+                            onChange={this.validateField}
+                            className={className}
+                            type={propsField.type}
+                        />
+                    )
+                break
             }
-
-            let className = classNames({
-                'error': field.isValid === false,
-                'valid': field.isValid === true
-            })
-
-            fields.push(
-                <InputField
-                    id={fieldName + "-field"}
-                    key={fieldName}
-                    name={fieldName}
-                    placeholder={field.placeholder}
-                    onChange={this.validateField}
-                    onClick={this.validateField}
-                    className={className}
-                    type={field.type}
-                />
-            )
         }
 
         // button label to be specified in schema
         let buttonOptions = {
-            className: this.title.replace(' ', '-') + '-button',
-            label: this.schema.buttonLabel,
+            className: this.props.schema.title.replace(' ', '-') + '-button',
+            label: this.props.schema.buttonLabel,
             onClick: this.onSubmit
         }
 
@@ -362,7 +404,7 @@ export default class Form extends Component {
 
         return (
             <FieldSet>
-                <h4 className="h4">{this.title}</h4>
+                <h4 className="h4">{this.props.schema.title}</h4>
                 {
                     this.state.message ? (
                         <p>{this.state.message}</p>
@@ -372,6 +414,15 @@ export default class Form extends Component {
                 <Button {...buttonOptions} />
             </FieldSet>
         )
+    }
+
+    _changeSelectValue = (e) => {
+        let fields = this.state.fields
+        fields[e.name].value = e.value
+
+        this.setState({
+            fields: fields
+        })
     }
 
 

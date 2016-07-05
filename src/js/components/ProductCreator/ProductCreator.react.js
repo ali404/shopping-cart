@@ -3,10 +3,21 @@ import React, {Component} from 'react'
 import Form from '../Form/Form.react'
 
 export default class ItemCreator extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
+    }
 
-        this.itemSchema = JSON.stringify({
+    render() {
+        let shops = this.props.shops.map((shop) => {
+            return {
+                value: shop.name,
+                label: shop.name,
+                name: 'shopName'
+            }
+        })
+
+
+        let itemSchema = {
             title: 'Create Product',
             buttonLabel: 'Add product',
             required: ['productName', 'productDescription'],
@@ -23,15 +34,13 @@ export default class ItemCreator extends Component {
                 },
                 shopName: {
                     type: 'select',
-                    items: props.shops
+                    items: shops
                 }
             }
-        })
-    }
+        }
 
-    render() {
         return (
-            <Form schema={this.itemSchema} />
+            <Form schema={itemSchema} />
         )
     }
 }

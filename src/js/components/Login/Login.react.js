@@ -6,7 +6,7 @@ export default class Login extends Component {
     constructor() {
         super()
 
-        this.loginSchema = JSON.stringify({
+        this.loginSchema = {
             title: 'Login',
             buttonLabel: 'Login',
             required: ['username', 'password'],
@@ -22,7 +22,7 @@ export default class Login extends Component {
                     placeholder: 'Password...'
                 }
             }
-        })
+        }
 
         this.validators = {
             username: Security.validateUsername,
